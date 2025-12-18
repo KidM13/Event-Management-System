@@ -12,10 +12,10 @@ The main focus of the project is to apply data structures in a practical way.
 - Events are stored in memory using a Binary Search Tree (BST)
 - Each event has an ID, name, date, and capacity
 - The event ID is used as the key for searching
-- Data is loaded from a CSV file when the program starts
-- Data is saved back to the CSV file when the program exits
+- Data is loaded from a txt file when the program starts
+- Data is saved back to the txt file when the program exits
 
-No database is used. File handling is done using simple CSV files.
+No database is used. File handling is done using simple .txt files.
 
 ## Main functionalities
 
@@ -31,7 +31,8 @@ The project is written in C++ and can be compiled using any standard compiler.
 Example using g++:
 
 g++ src/*.cpp -I include -o event_system
-to run it use
+
+  to run it 
 ./event_system
 
 ## Notes
