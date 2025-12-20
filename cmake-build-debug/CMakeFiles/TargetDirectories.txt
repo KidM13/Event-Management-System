@@ -1,3 +1,0 @@
-C:/Users/OMEN/Desktop/Desk Folders/Event-Management-System/cmake-build-debug/CMakeFiles/Event_Management_System.dir
-C:/Users/OMEN/Desktop/Desk Folders/Event-Management-System/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/OMEN/Desktop/Desk Folders/Event-Management-System/cmake-build-debug/CMakeFiles/rebuild_cache.dir
