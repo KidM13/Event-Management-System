@@ -1,2 +1,25 @@
+# CLion / JetBrains
+.idea/
+*.iml
+
+# CMake build folders
+cmake-build-*/
+build/
+out/
+
+# CMake cache
+CMakeCache.txt
+CMakeFiles/
+
+# Compiled binaries
+*.exe
+*.out
+*.o
+*.obj
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+#CMakeLists.txt
 CMakeLists.txt
-cmake-build-debug
