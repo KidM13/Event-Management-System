@@ -2,43 +2,33 @@
 #include <iostream>
 
 void EventManager::addEvent(int id, string name, string date, int capacity) {
-    Event e;
-    e.id = id;
-    e.name = name;
-    e.date = date;
-    e.capacity = capacity;
-    e.currentParticipants = 0;   // MUST be initialized
-
-
+    Event e{ id, name, date, capacity, 0 };
     eventTree.insertEvent(e);
     cout << "Event added successfully.\n";
 }
 
-void EventManager::removeEvent(string date) {
-    eventTree.deleteEvent(date);
+void EventManager::removeEvent(const string& date, const string& name) {
+    eventTree.deleteEvent(date, name);
     cout << "Event removed if it existed.\n";
 }
 
-void EventManager::searchEvent(string date) {
-    if (eventTree.searchEvent(date))
-        cout << "Event found.\n";
-    else
-        cout << "Event not found.\n";
+bool EventManager::searchEvent(const string& date, const string& name) {
+    return eventTree.searchEvent(date, name);
 }
 
 void EventManager::showAllEvents() {
-    cout << "\n--- All Events (Sorted by Date) ---\n";
+    cout << "\n--- All Events (Sorted by Date, then Name) ---\n";
     eventTree.displayEvents();
 }
 
-bool EventManager::eventExists(string date) {
-    return eventTree.searchEvent(date);
+bool EventManager::eventExists(const string& date, const string& name) {
+    return eventTree.searchEvent(date, name);
 }
 
-bool EventManager::hasAvailableSlot(string date) {
-    return eventTree.hasSlot(date);
+bool EventManager::hasAvailableSlot(const string& date, const string& name) {
+    return eventTree.hasSlot(date, name);
 }
 
-void EventManager::incrementParticipantCount(string date) {
-    eventTree.incrementParticipant(date);
+void EventManager::incrementParticipantCount(const string& date, const string& name) {
+    eventTree.incrementParticipant(date, name);
 }

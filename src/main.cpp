@@ -46,18 +46,33 @@ int main() {
             }
 
             case 2: {
-                string date;
-                cout << "Enter Event Date to remove: ";
+                string date, name;
+
+                cout << "Enter Event Date (YYYY-MM-DD): ";
                 cin >> date;
-                eventManager.removeEvent(date);
+                cin.ignore();
+
+                cout << "Enter Event Name: ";
+                getline(cin, name);
+
+                eventManager.removeEvent(date, name);
                 break;
             }
 
             case 3: {
-                string date;
-                cout << "Enter Event Date to search: ";
+                string date, name;
+
+                cout << "Enter Event Date (YYYY-MM-DD): ";
                 cin >> date;
-                eventManager.searchEvent(date);
+                cin.ignore();
+
+                cout << "Enter Event Name: ";
+                getline(cin, name);
+
+                if (eventManager.searchEvent(date, name))
+                    cout << "Event found.\n";
+                else
+                    cout << "Event not found.\n";
                 break;
             }
 
@@ -67,7 +82,7 @@ int main() {
 
             case 5: {
                 int pid;
-                string pname, eventDate;
+                string pname, eventDate, eventName;
 
                 cout << "Enter Participant ID: ";
                 cin >> pid;
@@ -76,19 +91,32 @@ int main() {
                 cout << "Enter Participant Name: ";
                 getline(cin, pname);
 
-                cout << "Enter Event Date to register for: ";
+                cout << "Enter Event Date (YYYY-MM-DD): ";
                 cin >> eventDate;
+                cin.ignore();
 
-                participantManager.registerParticipant(pid, pname, eventDate);
+                cout << "Enter Event Name: ";
+                getline(cin, eventName);
+
+                participantManager.registerParticipant(
+                        pid, pname, eventDate, eventName
+                );
                 break;
             }
 
             case 6: {
-                string eventDate;
-                cout << "Enter Event Date to process waiting list: ";
-                cin >> eventDate;
+                string eventDate, eventName;
 
-                participantManager.processWaitingList(eventDate);
+                cout << "Enter Event Date (YYYY-MM-DD): ";
+                cin >> eventDate;
+                cin.ignore();
+
+                cout << "Enter Event Name: ";
+                getline(cin, eventName);
+
+                participantManager.processWaitingList(
+                        eventDate, eventName
+                );
                 break;
             }
 

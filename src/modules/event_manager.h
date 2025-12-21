@@ -9,12 +9,12 @@ private:
 
 public:
     void addEvent(int id, string name, string date, int capacity);
-    void removeEvent(string date);
-    void searchEvent(string date);
+    void removeEvent(const string& date, const string& name);
+    bool searchEvent(const string& date, const string& name);
     void showAllEvents();
-    bool eventExists(string date);
-    bool hasAvailableSlot(string date);
-    void incrementParticipantCount(string date);
+    bool eventExists(const string& date, const string& name);
+    bool hasAvailableSlot(const string& date, const string& name);
+    void incrementParticipantCount(const string& date, const string& name);
 };
 
 #endif

@@ -10,16 +10,16 @@ BST::BST() {
     root = nullptr;
 }
 
-// Insert helper
+// Composite comparison insert
 BSTNode* BST::insert(BSTNode* node, Event e) {
-    if (node == nullptr)
-        return new BSTNode(e);
+    if (!node) return new BSTNode(e);
 
-    if (e.date < node->data.date)
+    if (e.date < node->data.date ||
+        (e.date == node->data.date && e.name < node->data.name)) {
         node->left = insert(node->left, e);
-    else if (e.date > node->data.date)
+    } else {
         node->right = insert(node->right, e);
-
+    }
     return node;
 }
 
@@ -27,72 +27,77 @@ void BST::insertEvent(Event e) {
     root = insert(root, e);
 }
 
-// Search helper
-BSTNode* BST::search(BSTNode* node, string date) {
-    if (node == nullptr || node->data.date == date)
+// Composite search
+BSTNode* BST::search(BSTNode* node, const string& date, const string& name) {
+    if (!node) return nullptr;
+
+    if (date == node->data.date && name == node->data.name)
         return node;
 
-    if (date < node->data.date)
-        return search(node->left, date);
+    if (date < node->data.date ||
+        (date == node->data.date && name < node->data.name))
+        return search(node->left, date, name);
     else
-        return search(node->right, date);
+        return search(node->right, date, name);
 }
 
-bool BST::searchEvent(string date) {
-    return search(root, date) != nullptr;
+bool BST::searchEvent(const string& date, const string& name) {
+    return search(root, date, name) != nullptr;
 }
 
-// Find minimum (used in delete)
+// Find min (unchanged)
 BSTNode* BST::findMin(BSTNode* node) {
-    while (node && node->left != nullptr)
-        node = node->left;
+    while (node && node->left) node = node->left;
     return node;
 }
 
-// Delete helper
-BSTNode* BST::deleteNode(BSTNode* node, string date) {
-    if (node == nullptr)
-        return node;
+// Composite delete
+BSTNode* BST::deleteNode(BSTNode* node, const string& date, const string& name) {
+    if (!node) return nullptr;
 
-    if (date < node->data.date)
-        node->left = deleteNode(node->left, date);
-    else if (date > node->data.date)
-        node->right = deleteNode(node->right, date);
+    if (date < node->data.date ||
+        (date == node->data.date && name < node->data.name)) {
+        node->left = deleteNode(node->left, date, name);
+    }
+    else if (date > node->data.date ||
+             (date == node->data.date && name > node->data.name)) {
+        node->right = deleteNode(node->right, date, name);
+    }
     else {
-        // Case 1 & 2
-        if (node->left == nullptr) {
+        if (!node->left) {
             BSTNode* temp = node->right;
             delete node;
             return temp;
         }
-        else if (node->right == nullptr) {
+        if (!node->right) {
             BSTNode* temp = node->left;
             delete node;
             return temp;
         }
 
-        // Case 3: Two children
         BSTNode* temp = findMin(node->right);
         node->data = temp->data;
-        node->right = deleteNode(node->right, temp->data.date);
+        node->right = deleteNode(node->right,
+                                 temp->data.date,
+                                 temp->data.name);
     }
     return node;
 }
 
-void BST::deleteEvent(string date) {
-    root = deleteNode(root, date);
+void BST::deleteEvent(const string& date, const string& name) {
+    root = deleteNode(root, date, name);
 }
 
-// Inorder traversal
 void BST::inorder(BSTNode* node) {
-    if (node == nullptr)
-        return;
+    if (!node) return;
 
     inorder(node->left);
     cout << "ID: " << node->data.id
          << " | Name: " << node->data.name
          << " | Date: " << node->data.date
-         << " | Capacity: " << node->data.capacity << endl;
+         << " | Capacity: " << node->data.capacity
+         << " | Registered: " << node->data.currentParticipants
+         << endl;
     inorder(node->right);
 }
 
@@ -100,18 +105,14 @@ void BST::displayEvents() {
     inorder(root);
 }
 
-bool BST::hasSlot(string date) {
-    BSTNode* node = search(root, date);
-    if (node == nullptr)
-        return false;
-
-    return node->data.currentParticipants < node->data.capacity;
+bool BST::hasSlot(const string& date, const string& name) {
+    BSTNode* node = search(root, date, name);
+    return node && node->data.currentParticipants < node->data.capacity;
 }
 
-bool BST::incrementParticipant(string date) {
-    BSTNode* node = search(root, date);
-    if (node == nullptr)
-        return false;
+bool BST::incrementParticipant(const string& date, const string& name) {
+    BSTNode* node = search(root, date, name);
+    if (!node) return false;
 
     if (node->data.currentParticipants < node->data.capacity) {
         node->data.currentParticipants++;
@@ -119,4 +120,3 @@ bool BST::incrementParticipant(string date) {
     }
     return false;
 }
-

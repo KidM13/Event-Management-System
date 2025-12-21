@@ -4,16 +4,14 @@
 #include <string>
 using namespace std;
 
-// Event data model
 struct Event {
     int id;
     string name;
-    string date;      // BST KEY
+    string date;
     int capacity;
     int currentParticipants;
 };
 
-// BST Node
 struct BSTNode {
     Event data;
     BSTNode* left;
@@ -26,10 +24,9 @@ class BST {
 private:
     BSTNode* root;
 
-    // Helper functions
     BSTNode* insert(BSTNode* node, Event e);
-    BSTNode* search(BSTNode* node, string date);
-    BSTNode* deleteNode(BSTNode* node, string date);
+    BSTNode* search(BSTNode* node, const string& date, const string& name);
+    BSTNode* deleteNode(BSTNode* node, const string& date, const string& name);
     BSTNode* findMin(BSTNode* node);
     void inorder(BSTNode* node);
 
@@ -37,12 +34,11 @@ public:
     BST();
 
     void insertEvent(Event e);
-    bool searchEvent(string date);
-    void deleteEvent(string date);
+    bool searchEvent(const string& date, const string& name);
+    void deleteEvent(const string& date, const string& name);
     void displayEvents();
-    bool hasSlot(string date);
-    bool incrementParticipant(string date);
-
+    bool hasSlot(const string& date, const string& name);
+    bool incrementParticipant(const string& date, const string& name);
 };
 
 #endif
