@@ -12,12 +12,26 @@ void EventManager::removeEvent(const string& date, const string& name) {
     cout << "Event removed if it existed.\n";
 }
 
-bool EventManager::searchEvent(const string& date, const string& name) {
-    return eventTree.searchEvent(date, name);
+bool EventManager::searchEventHybrid(const string& date, const string& name) {
+    if (!date.empty() && !name.empty())
+        return eventTree.searchEvent(date, name);
+    if (!date.empty())
+        return eventTree.searchByDate(date);
+    if (!name.empty())
+        return eventTree.searchByName(name);
+
+    return false;
+}
+
+bool EventManager::searchByDate(const string& date) {
+    return eventTree.searchByDate(date);
+}
+
+bool EventManager::searchByName(const string& name) {
+    return eventTree.searchByName(name);
 }
 
 void EventManager::showAllEvents() {
-    cout << "\n--- All Events (Sorted by Date, then Name) ---\n";
     eventTree.displayEvents();
 }
 

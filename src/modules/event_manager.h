@@ -10,7 +10,12 @@ private:
 public:
     void addEvent(int id, string name, string date, int capacity);
     void removeEvent(const string& date, const string& name);
-    bool searchEvent(const string& date, const string& name);
+
+    // OPTION 1 hybrid search
+    bool searchEventHybrid(const string& date, const string& name);
+    bool searchByDate(const string& date);
+    bool searchByName(const string& name);
+
     void showAllEvents();
     bool eventExists(const string& date, const string& name);
     bool hasAvailableSlot(const string& date, const string& name);

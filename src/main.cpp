@@ -60,19 +60,52 @@ int main() {
             }
 
             case 3: {
+                int searchChoice;
                 string date, name;
 
-                cout << "Enter Event Date (YYYY-MM-DD): ";
-                cin >> date;
+                cout << "\n--- Search Event ---\n";
+                cout << "1. Search by Date\n";
+                cout << "2. Search by Name\n";
+                cout << "3. Search by Date and Name\n";
+                cout << "Enter option: ";
+                cin >> searchChoice;
                 cin.ignore();
 
-                cout << "Enter Event Name: ";
-                getline(cin, name);
+                bool found = false;
 
-                if (eventManager.searchEvent(date, name))
-                    cout << "Event found.\n";
-                else
-                    cout << "Event not found.\n";
+                switch (searchChoice) {
+                    case 1:
+                        cout << "Enter Event Date (YYYY-MM-DD): ";
+                        cin >> date;
+                        found = eventManager.searchByDate(date);
+                        break;
+
+                    case 2:
+                        cout << "Enter Event Name: ";
+                        getline(cin, name);
+                        found = eventManager.searchByName(name);
+                        break;
+
+                    case 3:
+                        cout << "Enter Event Date (YYYY-MM-DD): ";
+                        cin >> date;
+                        cin.ignore();
+
+                        cout << "Enter Event Name: ";
+                        getline(cin, name);
+                        found = eventManager.searchEventHybrid(date, name);
+                        if(found)
+                            cout << "Event Found";
+                        break;
+
+                    default:
+                        cout << "Invalid search option.\n";
+                        continue;
+                }
+
+                if (!found)
+                    cout << "No matching event found.\n";
+
                 break;
             }
 

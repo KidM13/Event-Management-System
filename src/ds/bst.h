@@ -30,13 +30,21 @@ private:
     BSTNode* findMin(BSTNode* node);
     void inorder(BSTNode* node);
 
+    // OPTION 1 traversal helpers
+    bool searchByDateTraversal(BSTNode* node, const string& date);
+    bool searchByNameTraversal(BSTNode* node, const string& name);
+
 public:
     BST();
 
     void insertEvent(Event e);
     bool searchEvent(const string& date, const string& name);
+    bool searchByDate(const string& date);
+    bool searchByName(const string& name);
+
     void deleteEvent(const string& date, const string& name);
     void displayEvents();
+
     bool hasSlot(const string& date, const string& name);
     bool incrementParticipant(const string& date, const string& name);
 };
