@@ -2,6 +2,8 @@
 #define BST_H
 
 #include <string>
+#include <vector>
+
 using namespace std;
 
 struct Event {
@@ -9,7 +11,11 @@ struct Event {
     string name;
     string date;
     int capacity;
-    int currentParticipants;
+    vector<int> participants;
+
+    Event(int eid, const string& ename,
+          const string& edate, int cap)
+        : id(eid), name(ename), date(edate), capacity(cap) {}
 };
 
 struct BSTNode {
@@ -25,28 +31,37 @@ private:
     BSTNode* root;
 
     BSTNode* insert(BSTNode* node, Event e);
-    BSTNode* search(BSTNode* node, const string& date, const string& name);
-    BSTNode* deleteNode(BSTNode* node, const string& date, const string& name);
+    BSTNode* search(BSTNode* node,
+                    const string& date,
+                    const string& name);
+    BSTNode* deleteNode(BSTNode* node,
+                        const string& date,
+                        const string& name);
     BSTNode* findMin(BSTNode* node);
     void inorder(BSTNode* node);
 
-    // OPTION 1 traversal helpers
-    bool searchByDateTraversal(BSTNode* node, const string& date);
-    bool searchByNameTraversal(BSTNode* node, const string& name);
+    bool searchByDateTraversal(BSTNode* node,
+                               const string& date);
+    bool searchByNameTraversal(BSTNode* node,
+                               const string& name);
 
 public:
     BST();
 
+    // Core operations
     void insertEvent(Event e);
-    bool searchEvent(const string& date, const string& name);
+    void deleteEvent(const string& date,
+                     const string& name);
+
+    Event* findEvent(const string& date,
+                     const string& name);
+
+    // Searching
     bool searchByDate(const string& date);
     bool searchByName(const string& name);
 
-    void deleteEvent(const string& date, const string& name);
+    // Display
     void displayEvents();
-
-    bool hasSlot(const string& date, const string& name);
-    bool incrementParticipant(const string& date, const string& name);
 };
 
 #endif
