@@ -3,51 +3,30 @@
 
 using namespace std;
 
-ParticipantManager::ParticipantManager(EventManager& em)
-        : eventManager(em) {}
-
-void ParticipantManager::registerParticipant(
-        int participantId,
-        const string& participantName,
-        const string& eventDate,
-        const string& eventName
+bool ParticipantManager::registerParticipant(
+    int id,
+    const string& name,
 ) {
-    if (!eventManager.eventExists(eventDate, eventName)) {
-        cout << "Event does not exist.\n";
-        return;
+    if (participants.search(id) != nullptr) {
+        return false; // already exists
     }
 
-    if (eventManager.hasAvailableSlot(eventDate, eventName)) {
-        eventManager.incrementParticipantCount(eventDate, eventName);
-        cout << "Participant registered successfully.\n";
-    } else {
-        waitingList.enqueue({participantId, participantName});
-        cout << "Event full. Added to waiting list.\n";
-    }
+    participants.insert(id, name);
+    return true;
 }
 
-void ParticipantManager::processWaitingList(
-        const string& eventDate,
-        const string& eventName
-) {
-    if (!eventManager.eventExists(eventDate, eventName)) {
-        cout << "Event does not exist.\n";
-        return;
-    }
+bool ParticipantManager::removeParticipant(int id) {
+    return participants.remove(id);
+}
 
-    if (waitingList.isEmpty()) {
-        cout << "Waiting list empty.\n";
-        return;
-    }
+bool ParticipantManager::participantExists(int id) {
+    return participants.search(id) != nullptr;
+}
 
-    if (!eventManager.hasAvailableSlot(eventDate, eventName)) {
-        cout << "No available slots.\n";
-        return;
-    }
+Participant* ParticipantManager::getParticipant(int id) {
+    return participants.search(id);
+}
 
-    Participant p = waitingList.dequeue();
-    eventManager.incrementParticipantCount(eventDate, eventName);
-
-    cout << "Participant moved from waiting list:\n";
-    cout << "ID: " << p.id << " Name: " << p.name << endl;
+void ParticipantManager::showAllParticipants() {
+    participants.display();
 }

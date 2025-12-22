@@ -1,28 +1,28 @@
 #ifndef PARTICIPANT_MANAGER_H
 #define PARTICIPANT_MANAGER_H
 
-#include "../ds/queue.h"
-#include "event_manager.h"
+#include "../ds/hash.h"
+#include <string>
+
+using namespace std;
+
+struct Participant {
+    int id;
+    string name;
+};
 
 class ParticipantManager {
 private:
-    Queue waitingList;
-    EventManager& eventManager;
+    HashTable participants;
 
 public:
-    ParticipantManager(EventManager& em);
+    bool registerParticipant(int id, const string& name);
+    bool removeParticipant(int id);
 
-    void registerParticipant(
-            int participantId,
-            const string& participantName,
-            const string& eventDate,
-            const string& eventName
-    );
+    bool participantExists(int id);
+    Participant* getParticipant(int id);
 
-    void processWaitingList(
-            const string& eventDate,
-            const string& eventName
-    );
+    void showAllParticipants();
 };
 
 #endif
