@@ -2,24 +2,43 @@
 #define EVENT_MANAGER_H
 
 #include "../ds/bst.h"
+#include <string>
+
+using namespace std;
 
 class EventManager {
 private:
     BST eventTree;
 
 public:
-    void addEvent(int id, string name, string date, int capacity);
+    // Event lifecycle
+    void addEvent(int id, const string& name, const string& date, int capacity);
     void removeEvent(const string& date, const string& name);
 
-    // OPTION 1 hybrid search
+    // Searching
     bool searchEventHybrid(const string& date, const string& name);
     bool searchByDate(const string& date);
     bool searchByName(const string& name);
 
+    // Display
     void showAllEvents();
+
+    // Validation
     bool eventExists(const string& date, const string& name);
     bool hasAvailableSlot(const string& date, const string& name);
-    void incrementParticipantCount(const string& date, const string& name);
+
+    // Participant ↔ Event binding (EXECUTION ONLY)
+    bool addParticipantToEvent(
+        const string& date,
+        const string& name,
+        int participantId
+    );
+
+    bool removeParticipantFromEvent(
+        const string& date,
+        const string& name,
+        int participantId
+    );
 };
 
 #endif
