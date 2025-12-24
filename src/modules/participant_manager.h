@@ -6,10 +6,7 @@
 
 using namespace std;
 
-struct Participant {
-    int id;
-    string name;
-};
+
 
 class ParticipantManager {
 private:

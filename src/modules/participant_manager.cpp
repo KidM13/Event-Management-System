@@ -5,7 +5,7 @@ using namespace std;
 
 bool ParticipantManager::registerParticipant(
     int id,
-    const string& name,
+    const string& name
 ) {
     if (participants.search(id) != nullptr) {
         return false; // already exists
@@ -30,3 +30,5 @@ Participant* ParticipantManager::getParticipant(int id) {
 void ParticipantManager::showAllParticipants() {
     participants.display();
 }
+
+
