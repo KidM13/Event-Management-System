@@ -2,14 +2,12 @@
 #define HASH_H
 
 #include <string>
+#include "../models/participant.h"
+
 
 using namespace std;
 
-struct Participant {
-    int id;
-    string name;
-    Participant* next;   // for chaining
-};
+
 
 class HashTable {
 private:

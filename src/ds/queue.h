@@ -1,14 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <string>
-using namespace std;
-
-// Participant data model
-struct Participant {
-    int id;
-    string name;
-};
+#include "../models/participant.h"
 
 struct QueueNode {
     Participant data;
