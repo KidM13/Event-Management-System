@@ -4,52 +4,32 @@
 
 using namespace std;
 
-FileManager::FileManager() {
-    eventsFile = "data/events.txt";
-    participantsFile = "data/participants.txt";
-    logsFile = "data/logs.txt";
-}
+FileManager::FileManager(
+    const string& eventsPath,
+    const string& participantsPath,
+    const string& logsPath
+) : eventsFile(eventsPath),
+    participantsFile(participantsPath),
+    logsFile(logsPath) {}
 
-// -------------------- EVENTS --------------------
-vector<FileEvent> FileManager::loadEvents() {
-    vector<FileEvent> events;
-    ifstream file(eventsFile);
-
-    if (!file.is_open()) {
-        return events;
-    }
-
-    FileEvent e;
-    while (file >> e.id >> e.name >> e.date >> e.capacity) {
-        events.push_back(e);
-    }
-
-    file.close();
-    return events;
-}
-
-void FileManager::saveEvent(const FileEvent& event) {
-    ofstream file(eventsFile, ios::app);
+// -------------------- LOGS --------------------
+void FileManager::log(const string& message) {
+    ofstream file(logsFile, ios::app);
     if (!file.is_open()) return;
 
-    file << event.id << " "
-         << event.name << " "
-         << event.date << " "
-         << event.capacity << endl;
-
+    file << message << endl;
     file.close();
 }
 
 // -------------------- PARTICIPANTS --------------------
-vector<FileParticipant> FileManager::loadParticipants() {
-    vector<FileParticipant> participants;
+vector<Participant> FileManager::loadParticipants() {
+    vector<Participant> participants;
     ifstream file(participantsFile);
 
-    if (!file.is_open()) {
+    if (!file.is_open())
         return participants;
-    }
 
-    FileParticipant p;
+    Participant p;
     while (file >> p.id >> p.name) {
         participants.push_back(p);
     }
@@ -58,21 +38,27 @@ vector<FileParticipant> FileManager::loadParticipants() {
     return participants;
 }
 
-void FileManager::saveParticipant(const FileParticipant& participant) {
-    ofstream file(participantsFile, ios::app);
+void FileManager::saveParticipants(
+    const vector<Participant>& participants
+) {
+    ofstream file(participantsFile);
     if (!file.is_open()) return;
 
-    file << participant.id << " "
-         << participant.name << endl;
+    for (const auto& p : participants) {
+        file << p.id << " " << p.name << endl;
+    }
 
     file.close();
 }
 
-// -------------------- LOGS --------------------
-void FileManager::log(const string& message) {
+// -------------------- REPORT --------------------
+void FileManager::generateEventReport(EventManager& eventManager) {
     ofstream file(logsFile, ios::app);
     if (!file.is_open()) return;
 
-    file << message << endl;
+    file << "\n=== EVENT REPORT ===\n";
+    eventManager.showAllEvents();
+    file << "====================\n";
+
     file.close();
 }

@@ -4,19 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "../models/participant.h"
+#include "event_manager.h"
+
 using namespace std;
-
-struct FileParticipant {
-    int id;
-    string name;
-};
-
-struct FileEvent {
-    int id;
-    string name;
-    string date;
-    int capacity;
-};
 
 class FileManager {
 private:
@@ -25,19 +16,20 @@ private:
     string logsFile;
 
 public:
-    // Constructor sets correct relative paths
-    FileManager();
+    FileManager(
+        const string& eventsPath,
+        const string& participantsPath,
+        const string& logsPath
+    );
 
-    // Events
-    vector<FileEvent> loadEvents();
-    void saveEvent(const FileEvent& event);
-
-    // Participants
-    vector<FileParticipant> loadParticipants();
-    void saveParticipant(const FileParticipant& participant);
-
-    // Logs
+    // Logging
     void log(const string& message);
+
+    vector<Participant> loadParticipants();
+    void saveParticipants(const vector<Participant>& participants);
+
+    // Reports
+    void generateEventReport(EventManager& eventManager);
 };
 
 #endif
