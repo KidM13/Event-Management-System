@@ -112,7 +112,12 @@ int main() {
             cout << "Event Date: ";
             getline(cin, date);
 
-            scheduleManager.registerParticipantForEvent(pid, date, name);
+            if (!scheduleManager.registerParticipantForEvent(id, date, name)) {
+            cout << "Participant not registered. Please register first.\n";
+            } else {
+            cout << "Participant registered successfully.\n";
+            }
+
             break;
         }
 
