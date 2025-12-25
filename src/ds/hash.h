@@ -7,12 +7,22 @@
 
 using namespace std;
 
+struct HashNode {
+    Participant data;
+    HashNode* next;
+
+    HashNode(int id, const string& name)
+        : data{id, name}, next(nullptr) {}
+};
+
+
 
 
 class HashTable {
 private:
     static const int TABLE_SIZE = 10;
-    Participant* table[TABLE_SIZE];
+    HashNode* table[TABLE_SIZE];
+
 
     int hashFunction(int id) const;
 

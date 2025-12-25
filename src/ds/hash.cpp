@@ -18,22 +18,19 @@ int HashTable::hashFunction(int id) const {
 void HashTable::insert(int id, const string& name) {
     int index = hashFunction(id);
 
-    Participant* newNode = new Participant;
-    newNode->id = id;
-    newNode->name = name;
+    HashNode* newNode = new HashNode(id, name);
     newNode->next = table[index];
-
     table[index] = newNode;
 }
 
 // Remove participant
 bool HashTable::remove(int id) {
     int index = hashFunction(id);
-    Participant* curr = table[index];
-    Participant* prev = nullptr;
+    HashNode* curr = table[index];
+    HashNode* prev = nullptr;
 
     while (curr != nullptr) {
-        if (curr->id == id) {
+        if (curr->data.id == id) {
             if (prev == nullptr) {
                 table[index] = curr->next;
             } else {
@@ -51,11 +48,11 @@ bool HashTable::remove(int id) {
 // Search participant
 Participant* HashTable::search(int id) const {
     int index = hashFunction(id);
-    Participant* curr = table[index];
+    HashNode* curr = table[index];
 
     while (curr != nullptr) {
-        if (curr->id == id) {
-            return curr;
+        if (curr->data.id == id) {
+            return &curr->data;  // return pointer to participant
         }
         curr = curr->next;
     }
@@ -66,14 +63,12 @@ Participant* HashTable::search(int id) const {
 void HashTable::display() const {
     for (int i = 0; i < TABLE_SIZE; i++) {
         cout << "Index " << i << ": ";
-        Participant* curr = table[i];
+        HashNode* curr = table[i];
         while (curr != nullptr) {
-            cout << "[" << curr->id << ", " << curr->name << "] -> ";
+            cout << "[" << curr->data.id
+                 << ", " << curr->data.name << "] -> ";
             curr = curr->next;
         }
-        cout << "NULL" << endl;
+        cout << "NULL\n";
     }
 }
-
-
-

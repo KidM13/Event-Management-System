@@ -3,11 +3,12 @@
 
 #include "../models/participant.h"
 
+
 struct QueueNode {
-    Participant data;
+    int data;
     QueueNode* next;
 
-    QueueNode(Participant p);
+    QueueNode(int d) : data(d), next(nullptr) {}
 };
 
 class Queue {
@@ -18,10 +19,11 @@ private:
 public:
     Queue();
 
-    bool isEmpty();
-    void enqueue(Participant p);
-    Participant dequeue();
-    Participant peek();
+    bool isEmpty() const;
+
+    void enqueue(int participantId);
+    int dequeue();
+    int peek() const;
 };
 
 #endif

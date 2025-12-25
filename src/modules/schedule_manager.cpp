@@ -59,6 +59,9 @@ bool ScheduleManager::registerParticipantForEvent(
     // event full → waitlist
     waitList.enqueue(participantId);
 
+
+
+
     undoStack.push({
         WAITLIST, participantId, date, eventName
     });
@@ -93,10 +96,10 @@ void ScheduleManager::processWaitList(
     if (!eventManager.hasAvailableSlot(date, eventName))
         return;
 
-    int nextParticipant = waitList.dequeue();
-    eventManager.addParticipantToEvent(
-        date, eventName, nextParticipant
-    );
+    int nextParticipantId = waitList.dequeue();
+    eventManager.addParticipantToEvent(date, eventName, nextParticipantId);
+
+
 }
 
 void ScheduleManager::undoLastScheduleAction() {

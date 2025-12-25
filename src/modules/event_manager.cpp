@@ -9,7 +9,7 @@ void EventManager::addEvent(
     const string& date,
     int capacity
 ) {
-    Event e;
+Event e(id, name, date, capacity);
     e.id = id;
     e.name = name;
     e.date = date;
