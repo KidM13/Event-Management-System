@@ -1,21 +1,14 @@
 #include "queue.h"
 #include <iostream>
 
-QueueNode::QueueNode(Participant p) {
-    data = p;
-    next = nullptr;
-}
+Queue::Queue() : front(nullptr), rear(nullptr) {}
 
-Queue::Queue() {
-    front = rear = nullptr;
-}
-
-bool Queue::isEmpty() {
+bool Queue::isEmpty() const {
     return front == nullptr;
 }
 
-void Queue::enqueue(Participant p) {
-    QueueNode* newNode = new QueueNode(p);
+void Queue::enqueue(int participantId) {
+    QueueNode* newNode = new QueueNode(participantId);
 
     if (isEmpty()) {
         front = rear = newNode;
@@ -25,26 +18,25 @@ void Queue::enqueue(Participant p) {
     }
 }
 
-Participant Queue::dequeue() {
+int Queue::dequeue() {
     if (isEmpty()) {
-        cout << "Waiting list is empty.\n";
-        return {-1, ""};
+        std::cout << "Waiting list is empty\n";
+        return -1;
     }
 
     QueueNode* temp = front;
-    Participant p = temp->data;
+    int participantId = temp->data;
 
     front = front->next;
     if (front == nullptr)
         rear = nullptr;
 
     delete temp;
-    return p;
+    return participantId;
 }
 
-Participant Queue::peek() {
+int Queue::peek() const {
     if (isEmpty())
-        return {-1, ""};
-
+        return -1;
     return front->data;
 }
