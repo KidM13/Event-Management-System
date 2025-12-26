@@ -35,6 +35,13 @@ int main() {
         "data/logs.txt"
     );
 
+    //loading the data
+    eventManager.loadEvents(fileManager.loadEvents());
+    participantManager.loadParticipants(
+    fileManager.loadParticipants()
+);
+
+
     int choice;
 
     do {
@@ -60,23 +67,31 @@ int main() {
             cout << "Capacity: ";
             cin >> capacity;
 
-            eventManager.addEvent(id, name, date, capacity);
+            if (eventManager.addEvent(id, name, date, capacity)) {
+             cout << "Event added successfully.\n";
             fileManager.log("Event added: " + name);
+           } else {
+            cout << "Failed to add event (event already exists).\n";
+              }
             break;
         }
 
         case 2: {
             string name, date;
-            cin.ignore();
 
             cout << "Event Name: ";
             getline(cin, name);
 
-            cout << "Event Date: ";
+            cout << "Event Date (YYYY-MM-DD): ";
             getline(cin, date);
 
-            eventManager.removeEvent(date, name);
-            fileManager.log("Event removed: " + name);
+            if (eventManager.removeEvent(date,name)) {
+             cout << "Event deleted successfully.\n";
+             fileManager.log("Event deleted: " + name);
+            } else {
+             cout << "Failed to delete event(event doesn't exist).\n";
+              }
+
             break;
         }
 
@@ -181,8 +196,13 @@ int main() {
             cout << "Participant Name: ";
             getline(cin, pname);
 
-            participantManager.registerParticipant(pid, pname);
-            fileManager.log("Participant registered: " + pname);
+            if(!participantManager.registerParticipant(pid, pname)){
+                cout << "Participant ID already exists.\n";
+                  }
+                else {
+               cout << "Participant registered successfully.\n";
+               fileManager.log("Participant registered: " + pname);
+             }
             break;
         }
 
@@ -200,11 +220,27 @@ int main() {
             cout << "Event Date: ";
             getline(cin, date);
 
-            if (!scheduleManager.registerParticipantForEvent(pid, date, name)) {
-            cout << "Participant not registered. Please register first.\n";
-            } else {
-            cout << "Participant registered successfully.\n";
-            }
+            RegisterResult result = scheduleManager.registerParticipantForEvent(pid, date, name);
+            switch (result) {
+                case REGISTERED:
+                    cout << "Participant registered successfully.\n";
+                    fileManager.log("Participant registered to event");
+                    break;
+                case EVENT_FULL: {
+                    cout << "Event is full. Join waitlist? (y/n): ";
+                    char choice;
+                    cin >> choice;
+                    if (choice == 'y') {
+                            scheduleManager.waitList.enqueue(pid);
+                    cout << "Added to waitlist.\n";
+                    }
+                    break;     }
+                case PARTICIPANT_NOT_FOUND:
+                    cout << "Participant not registered. Please register first.\n";
+                    break;
+                case EVENT_NOT_FOUND:
+                    cout << "Event not found.\n";
+                    break; }
 
             break;
         }
