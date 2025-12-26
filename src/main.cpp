@@ -11,11 +11,12 @@ void showMenu() {
     cout << "\n===== Event Management System =====\n";
     cout << "1. Add Event\n";
     cout << "2. Remove Event\n";
-    cout << "3. Show All Events\n";
-    cout << "4. Register Participant\n";
-    cout << "5. Schedule Participant to Event\n";
-    cout << "6. Undo Last Action\n";
-    cout << "7. Generate Event Report\n";
+    cout << "3. Search Event\n";
+    cout << "4. Show All Events\n";
+    cout << "5. Register Participant\n";
+    cout << "6. Schedule Participant to Event\n";
+    cout << "7. Undo Last Action\n";
+    cout << "8. Generate Event Report\n";
     cout << "0. Exit\n";
     cout << "Choose: ";
 }
@@ -78,11 +79,61 @@ int main() {
             break;
         }
 
-        case 3:
+            case 3: {
+                int searchChoice;
+                string date, name;
+
+                cout << "\n--- Search Event ---\n";
+                cout << "1. Search by Date\n";
+                cout << "2. Search by Name\n";
+                cout << "3. Search by Date & Name\n";
+                cout << "Choose: ";
+                cin >> searchChoice;
+                cin.ignore();
+
+                bool found = false;
+
+                switch (searchChoice) {
+                    case 1:
+                        cout << "Enter Event Date (YYYY-MM-DD): ";
+                        getline(cin, date);
+                        found = eventManager.searchByDate(date);
+                        break;
+
+                    case 2:
+                        cout << "Enter Event Name: ";
+                        getline(cin, name);
+                        found = eventManager.searchByName(name);
+                        break;
+
+                    case 3:
+                        cout << "Enter Event Date (YYYY-MM-DD): ";
+                        getline(cin, date);
+
+                        cout << "Enter Event Name: ";
+                        getline(cin, name);
+
+                        found = eventManager.searchEventHybrid(date, name);
+                        break;
+
+                    default:
+                        cout << "Invalid search option.\n";
+                        continue;
+                }
+
+                if (found)
+                    cout << "Event found.\n";
+                else
+                    cout << "No matching event found.\n";
+
+                break;
+            }
+
+            case 4:
             eventManager.showAllEvents();
             break;
 
-        case 4: {
+        case 5: {
             int pid;
             string pname;
 
@@ -98,7 +149,7 @@ int main() {
             break;
         }
 
-        case 5: {
+        case 6: {
             int pid;
             string name, date;
 
@@ -112,7 +163,7 @@ int main() {
             cout << "Event Date: ";
             getline(cin, date);
 
-            if (!scheduleManager.registerParticipantForEvent(id, date, name)) {
+            if (!scheduleManager.registerParticipantForEvent(pid, date, name)) {
             cout << "Participant not registered. Please register first.\n";
             } else {
             cout << "Participant registered successfully.\n";
@@ -121,12 +172,12 @@ int main() {
             break;
         }
 
-        case 6:
+        case 7:
             scheduleManager.undoLastScheduleAction();
             fileManager.log("Undo last action");
             break;
 
-        case 7:
+        case 8:
             fileManager.generateEventReport(eventManager);
             cout << "Event report generated.\n";
             break;

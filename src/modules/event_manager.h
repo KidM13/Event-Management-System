@@ -15,7 +15,7 @@ public:
     void addEvent(int id, const string& name, const string& date, int capacity);
     void removeEvent(const string& date, const string& name);
 
-    // Searching
+    // Searching (RETURN bool)
     bool searchEventHybrid(const string& date, const string& name);
     bool searchByDate(const string& date);
     bool searchByName(const string& name);
@@ -27,18 +27,14 @@ public:
     bool eventExists(const string& date, const string& name);
     bool hasAvailableSlot(const string& date, const string& name);
 
-    // Participant ↔ Event binding (EXECUTION ONLY)
-    bool addParticipantToEvent(
-        const string& date,
-        const string& name,
-        int participantId
-    );
+    // Participant ↔ Event binding
+    bool addParticipantToEvent(const string& date,
+                               const string& name,
+                               int participantId);
 
-    bool removeParticipantFromEvent(
-        const string& date,
-        const string& name,
-        int participantId
-    );
+    bool removeParticipantFromEvent(const string& date,
+                                    const string& name,
+                                    int participantId);
 };
 
 #endif

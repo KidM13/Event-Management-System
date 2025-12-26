@@ -5,7 +5,7 @@ using namespace std;
 
 // BSTNode constructor
 BSTNode::BSTNode(Event e)
-    : data(e), left(nullptr), right(nullptr) {}
+        : data(e), left(nullptr), right(nullptr) {}
 
 // BST constructor
 BST::BST() : root(nullptr) {}
@@ -130,36 +130,61 @@ void BST::displayEvents() {
 
 // Traversal searches
 //
-bool BST::searchByDateTraversal(
-    BSTNode* node,
-    const string& date
+void BST::searchByDateTraversal(
+        BSTNode* node,
+        const string& date,
+        bool& found
 ) {
-    if (!node) return false;
+    if (!node) return;
 
-    if (node->data.date == date)
-        return true;
+    searchByDateTraversal(node->left, date, found);
 
-    return searchByDateTraversal(node->left, date) ||
-           searchByDateTraversal(node->right, date);
+    if (node->data.date == date) {
+        cout << "Event ID: " << node->data.id
+             << " | Name: " << node->data.name
+             << " | Date: " << node->data.date
+             << " | Capacity: " << node->data.capacity
+             << " | Registered: " << node->data.participants.size()
+             << endl;
+        found = true;
+    }
+
+    searchByDateTraversal(node->right, date, found);
 }
 
-bool BST::searchByNameTraversal(
-    BSTNode* node,
-    const string& name
+
+void BST::searchByNameTraversal(
+        BSTNode* node,
+        const string& name,
+        bool& found
 ) {
-    if (!node) return false;
+    if (!node) return;
 
-    if (node->data.name == name)
-        return true;
+    searchByNameTraversal(node->left, name, found);
 
-    return searchByNameTraversal(node->left, name) ||
-           searchByNameTraversal(node->right, name);
+    if (node->data.name == name) {
+        cout << "Event ID: " << node->data.id
+             << " | Name: " << node->data.name
+             << " | Date: " << node->data.date
+             << " | Capacity: " << node->data.capacity
+             << " | Registered: " << node->data.participants.size()
+             << endl;
+        found = true;
+    }
+
+    searchByNameTraversal(node->right, name, found);
 }
+
 
 bool BST::searchByDate(const string& date) {
-    return searchByDateTraversal(root, date);
+    bool found = false;
+    searchByDateTraversal(root, date, found);
+    return found;
 }
 
 bool BST::searchByName(const string& name) {
-    return searchByNameTraversal(root, name);
+    bool found = false;
+    searchByNameTraversal(root, name, found);
+    return found;
 }
+

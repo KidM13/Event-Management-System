@@ -15,7 +15,7 @@ struct Event {
 
     Event(int eid, const string& ename,
           const string& edate, int cap)
-        : id(eid), name(ename), date(edate), capacity(cap) {}
+            : id(eid), name(ename), date(edate), capacity(cap) {}
 };
 
 struct BSTNode {
@@ -40,10 +40,11 @@ private:
     BSTNode* findMin(BSTNode* node);
     void inorder(BSTNode* node);
 
-    bool searchByDateTraversal(BSTNode* node,
-                               const string& date);
-    bool searchByNameTraversal(BSTNode* node,
-                               const string& name);
+    // UPDATED traversal helpers
+    void searchByDateTraversal(BSTNode* node,const string& date,bool& found);
+    void searchByNameTraversal(BSTNode* node,
+                               const string& name,
+                               bool& found);
 
 public:
     BST();
@@ -56,7 +57,7 @@ public:
     Event* findEvent(const string& date,
                      const string& name);
 
-    // Searching
+    // Searching + displaying
     bool searchByDate(const string& date);
     bool searchByName(const string& name);
 
