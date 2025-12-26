@@ -107,3 +107,38 @@ bool EventManager::removeParticipantFromEvent(const string& date,
 void EventManager::showAllEvents() {
     eventTree.displayEvents();
 }
+
+bool EventManager::updateEvent(
+        const string& oldDate,
+        const string& oldName,
+        const string& newName,
+        const string& newDate,
+        int newCapacity
+) {
+    Event* oldEvent = eventTree.findEvent(oldDate, oldName);
+    if (!oldEvent)
+        return false;
+
+    // SAVE EVERYTHING BEFORE DELETE
+    int preservedId = oldEvent->id;
+    vector<int> preservedParticipants = oldEvent->participants;
+
+    // Remove old event
+    eventTree.deleteEvent(oldDate, oldName);
+
+    // Create updated event using preserved data
+    Event updatedEvent(
+            preservedId,
+            newName,
+            newDate,
+            newCapacity
+    );
+
+    updatedEvent.participants = preservedParticipants;
+
+    // Insert updated event
+    eventTree.insertEvent(updatedEvent);
+
+    return true;
+}
+

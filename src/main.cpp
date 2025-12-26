@@ -13,10 +13,11 @@ void showMenu() {
     cout << "2. Remove Event\n";
     cout << "3. Search Event\n";
     cout << "4. Show All Events\n";
-    cout << "5. Register Participant\n";
-    cout << "6. Schedule Participant to Event\n";
-    cout << "7. Undo Last Action\n";
-    cout << "8. Generate Event Report\n";
+    cout << "5. Update Event\n";
+    cout << "6. Register Participant\n";
+    cout << "7. Schedule Participant to Event\n";
+    cout << "8. Undo Last Action\n";
+    cout << "9. Generate Event Report\n";
     cout << "0. Exit\n";
     cout << "Choose: ";
 }
@@ -133,7 +134,43 @@ int main() {
             eventManager.showAllEvents();
             break;
 
-        case 5: {
+            case 5: {
+                string oldName, oldDate;
+                string newName, newDate;
+                int newCapacity;
+
+                cin.ignore();
+
+                cout << "Current Event Name: ";
+                getline(cin, oldName);
+
+                cout << "Current Event Date (YYYY-MM-DD): ";
+                getline(cin, oldDate);
+
+                cout << "New Event Name: ";
+                getline(cin, newName);
+
+                cout << "New Event Date (YYYY-MM-DD): ";
+                getline(cin, newDate);
+
+                cout << "New Capacity: ";
+                cin >> newCapacity;
+
+                if (eventManager.updateEvent(
+                        oldDate, oldName,
+                        newName, newDate,
+                        newCapacity
+                )) {
+                    cout << "Event updated successfully.\n";
+                } else {
+                    cout << "Event not found. Update failed.\n";
+                }
+
+                break;
+            }
+
+
+            case 6: {
             int pid;
             string pname;
 
@@ -149,7 +186,7 @@ int main() {
             break;
         }
 
-        case 6: {
+        case 7: {
             int pid;
             string name, date;
 
@@ -172,12 +209,12 @@ int main() {
             break;
         }
 
-        case 7:
+        case 8:
             scheduleManager.undoLastScheduleAction();
             fileManager.log("Undo last action");
             break;
 
-        case 8:
+        case 9:
             fileManager.generateEventReport(eventManager);
             cout << "Event report generated.\n";
             break;

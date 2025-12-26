@@ -35,6 +35,16 @@ public:
     bool removeParticipantFromEvent(const string& date,
                                     const string& name,
                                     int participantId);
+
+    // Update
+    bool updateEvent(
+            const string& oldDate,
+            const string& oldName,
+            const string& newName,
+            const string& newDate,
+            int newCapacity
+    );
+
 };
 
 #endif
