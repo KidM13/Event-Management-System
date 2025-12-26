@@ -7,8 +7,11 @@ using namespace std;
 void ParticipantManager::loadParticipants(
     const vector<Participant>& list
 ) {
-    participants = list;
+    for (const Participant& p : list) {
+        participants.insert(p.id, p.name);
+    }
 }
+
 
 
 bool ParticipantManager::registerParticipant(

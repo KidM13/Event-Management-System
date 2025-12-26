@@ -25,16 +25,21 @@ void FileManager::log(const string& message) {
 vector<Event> FileManager::loadEvents() {
     vector<Event> events;
     ifstream file(eventsFile);
-    if (!file.is_open()) return events;
 
-    Event e;
-    while (file >> e.id >> e.name >> e.date >> e.capacity) {
-        events.push_back(e);
+    if (!file.is_open())
+        return events;
+
+    int id, capacity;
+    string name, date;
+
+    while (file >> id >> name >> date >> capacity) {
+        events.emplace_back(id, name, date, capacity);
     }
 
     file.close();
     return events;
 }
+
 
 void FileManager::saveEvents(const vector<Event>& events) {
     ofstream file(eventsFile);

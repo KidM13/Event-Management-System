@@ -3,6 +3,7 @@
 
 #include "../ds/hash.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 

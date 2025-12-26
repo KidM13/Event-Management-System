@@ -60,7 +60,7 @@ public:
         ParticipantManager& pm
     );
 
-    bool registerParticipantForEvent(
+    RegisterResult registerParticipantForEvent(
         int participantId,
         const string& date,
         const string& eventName
