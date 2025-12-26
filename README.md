@@ -34,7 +34,7 @@ The project demonstrates the practical use of:
 Install **MinGW-w64** and ensure `g++` is added to your system `PATH`.
 
 Verify installation:
-```bash
+bash
 g++ --version
 
 - compile the from the project root directory means
