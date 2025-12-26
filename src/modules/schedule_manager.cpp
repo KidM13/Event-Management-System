@@ -35,22 +35,43 @@ ScheduleManager::ScheduleManager(
 ) : eventManager(em), participantManager(pm) {}
 
 RegisterResult ScheduleManager::registerParticipantForEvent(
-    int participantId,
-    const string& date,
-    const string& eventName ) {
-        if (!participantManager.participantExists(participantId))
-            return PARTICIPANT_NOT_FOUND;
-        if (!eventManager.eventExists(date, eventName))
-            return EVENT_NOT_FOUND;
-        if (eventManager.hasAvailableSlot(date, eventName)) {
-                eventManager.addParticipantToEvent(date, eventName, participantId);
-            return REGISTERED;     }
-            return EVENT_FULL; // decision handled in main.cpp `
+        int participantId,
+        const string& date,
+        const string& eventName
+) {
+    if (!participantManager.participantExists(participantId))
+        return PARTICIPANT_NOT_FOUND;
+
+    if (!eventManager.eventExists(date, eventName))
+        return EVENT_NOT_FOUND;
+
+    // Case 1: Slot available → REGISTER
+    if (eventManager.hasAvailableSlot(date, eventName)) {
+        eventManager.addParticipantToEvent(date, eventName, participantId);
+
+        undoStack.push({
+                               REGISTER,
+                               participantId,
+                               date,
+                               eventName
+                       });
+
+        return REGISTERED;
+    }
+
+    // Case 2: Event full → WAITLIST
+    waitList.enqueue(participantId);
 
     undoStack.push({
-        WAITLIST, participantId, date, eventName
-    });
+                           WAITLIST,
+                           participantId,
+                           date,
+                           eventName
+                   });
+
+    return EVENT_FULL;
 }
+
 
 bool ScheduleManager::cancelRegistration(
     int participantId,
@@ -88,31 +109,31 @@ void ScheduleManager::processWaitList(
 
 void ScheduleManager::undoLastScheduleAction() {
     if (undoStack.isEmpty()) {
-        cerr << "No schedule action to undo\n";
+        cout << "No action to undo.\n";
         return;
     }
 
     ScheduleAction action = undoStack.pop();
 
     switch (action.type) {
+
         case REGISTER:
             eventManager.removeParticipantFromEvent(
-                action.date,
-                action.eventName,
-                action.participantId
+                    action.date,
+                    action.eventName,
+                    action.participantId
             );
+            cout << "Undo: Registration removed.\n";
             break;
 
         case CANCEL:
             eventManager.addParticipantToEvent(
-                action.date,
-                action.eventName,
-                action.participantId
+                    action.date,
+                    action.eventName,
+                    action.participantId
             );
-            break;
-
-        case WAITLIST:
-            // skipped intentionally
+            cout << "Undo: Registration restored.\n";
             break;
     }
 }
+

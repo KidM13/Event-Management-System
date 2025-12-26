@@ -179,6 +179,7 @@ int main() {
                         newCapacity
                 )) {
                     cout << "Event updated successfully.\n";
+                    fileManager.log("Event updated: " + newName);
                 } else {
                     cout << "Event not found. Update failed.\n";
                 }
