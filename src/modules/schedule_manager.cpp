@@ -34,38 +34,22 @@ ScheduleManager::ScheduleManager(
     ParticipantManager& pm
 ) : eventManager(em), participantManager(pm) {}
 
-bool ScheduleManager::registerParticipantForEvent(
+RegisterResult ScheduleManager::registerParticipantForEvent(
     int participantId,
     const string& date,
-    const string& eventName
-) {
-    if (!participantManager.participantExists(participantId))
-        return false;
-
-    if (!eventManager.eventExists(date, eventName))
-        return false;
-
-    if (eventManager.hasAvailableSlot(date, eventName)) {
-        eventManager.addParticipantToEvent(
-            date, eventName, participantId
-        );
-
-        undoStack.push({
-            REGISTER, participantId, date, eventName
-        });
-        return true;
-    }
-
-    // event full → waitlist
-    waitList.enqueue(participantId);
-
-
-
+    const string& eventName ) {
+        if (!participantManager.participantExists(participantId))
+            return PARTICIPANT_NOT_FOUND;
+        if (!eventManager.eventExists(date, eventName))
+            return EVENT_NOT_FOUND;
+        if (eventManager.hasAvailableSlot(date, eventName)) {
+                eventManager.addParticipantToEvent(date, eventName, participantId);
+            return REGISTERED;     }
+            return EVENT_FULL; // decision handled in main.cpp `
 
     undoStack.push({
         WAITLIST, participantId, date, eventName
     });
-    return true;
 }
 
 bool ScheduleManager::cancelRegistration(

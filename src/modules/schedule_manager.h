@@ -14,6 +14,12 @@ enum ScheduleActionType {
     CANCEL,
     WAITLIST
 };
+enum RegisterResult{
+    PARTICIPANT_NOT_FOUND,
+    EVENT_NOT_FOUND,
+    REGISTERED,
+    EVENT_FULL
+};
 
 struct ScheduleAction {
     ScheduleActionType type;
@@ -44,10 +50,11 @@ private:
     EventManager& eventManager;
     ParticipantManager& participantManager;
 
-    Queue waitList;              // waiting participants
     ScheduleStack undoStack;     // schedule undo only
 
 public:
+    Queue waitList;              // waiting participants
+
     ScheduleManager(
         EventManager& em,
         ParticipantManager& pm
