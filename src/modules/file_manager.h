@@ -25,6 +25,12 @@ public:
     // Logging
     void log(const string& message);
 
+    //events data
+    vector<Event> loadEvents();
+    void saveEvents(const vector<Event>& events);
+
+
+
     vector<Participant> loadParticipants();
     void saveParticipants(const vector<Participant>& participants);
 

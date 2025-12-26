@@ -3,6 +3,14 @@
 
 using namespace std;
 
+
+void ParticipantManager::loadParticipants(
+    const vector<Participant>& list
+) {
+    participants = list;
+}
+
+
 bool ParticipantManager::registerParticipant(
     int id,
     const string& name

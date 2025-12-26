@@ -20,6 +20,37 @@ void FileManager::log(const string& message) {
     file << message << endl;
     file.close();
 }
+// -------------------- EVENTS --------------------
+
+vector<Event> FileManager::loadEvents() {
+    vector<Event> events;
+    ifstream file(eventsFile);
+    if (!file.is_open()) return events;
+
+    Event e;
+    while (file >> e.id >> e.name >> e.date >> e.capacity) {
+        events.push_back(e);
+    }
+
+    file.close();
+    return events;
+}
+
+void FileManager::saveEvents(const vector<Event>& events) {
+    ofstream file(eventsFile);
+    if (!file.is_open()) return;
+
+    for (const auto& e : events) {
+        file << e.id << " "
+             << e.name << " "
+             << e.date << " "
+             << e.capacity << endl;
+    }
+
+    file.close();
+}
+
+
 
 // -------------------- PARTICIPANTS --------------------
 vector<Participant> FileManager::loadParticipants() {
@@ -57,8 +88,16 @@ void FileManager::generateEventReport(EventManager& eventManager) {
     if (!file.is_open()) return;
 
     file << "\n=== EVENT REPORT ===\n";
-    eventManager.showAllEvents();
-    file << "====================\n";
 
+    auto events = eventManager.getAllEvents();
+    for (const auto& e : events) {
+        file << e.id << " "
+             << e.name << " "
+             << e.date << " "
+             << e.capacity << "\n";
+    }
+
+    file << "====================\n";
     file.close();
 }
+

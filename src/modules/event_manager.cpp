@@ -5,18 +5,29 @@ using namespace std;
 
 /* ========= Event Lifecycle ========= */
 
-void EventManager::addEvent(int id,
+bool EventManager::addEvent(int id,
                             const string& name,
                             const string& date,
                             int capacity) {
+    if (eventTree.findEvent(date, name) != nullptr) {
+        return false; // event already exists
+    }
+
     Event e(id, name, date, capacity);
     eventTree.insertEvent(e);
+    return true;
 }
 
-void EventManager::removeEvent(const string& date,
+bool EventManager::removeEvent(const string& date,
                                const string& name) {
+    if (!eventTree.findEvent(date, name)) {
+        return false; // event does not exist
+    }
+
     eventTree.deleteEvent(date, name);
+    return true;
 }
+
 
 /* ========= Searching ========= */
 
@@ -107,6 +118,20 @@ bool EventManager::removeParticipantFromEvent(const string& date,
 void EventManager::showAllEvents() {
     eventTree.displayEvents();
 }
+
+//for loading event
+void EventManager::loadEvents(const vector<Event>& events) {
+    for (const auto& e : events) {
+        eventTree.insertEvent(e);
+    }
+}
+
+vector<Event> EventManager::getAllEvents() const {
+    vector<Event> events;
+    eventTree.getAllEvents(events);
+    return events;
+}
+
 
 bool EventManager::updateEvent(
         const string& oldDate,

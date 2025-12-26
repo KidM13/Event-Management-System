@@ -13,6 +13,8 @@ private:
     HashTable participants;
 
 public:
+    //Load participant
+    void loadParticipants(const vector<Participant>& list);
     bool registerParticipant(int id, const string& name);
     bool removeParticipant(int id);
 

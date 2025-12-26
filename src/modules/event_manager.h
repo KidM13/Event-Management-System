@@ -12,8 +12,8 @@ private:
 
 public:
     // Event lifecycle
-    void addEvent(int id, const string& name, const string& date, int capacity);
-    void removeEvent(const string& date, const string& name);
+    bool addEvent(int id, const string& name, const string& date, int capacity);
+    bool removeEvent(const string& date,const string& name);
 
     // Searching (RETURN bool)
     bool searchEventHybrid(const string& date, const string& name);
@@ -22,6 +22,10 @@ public:
 
     // Display
     void showAllEvents();
+
+    //load event
+    void loadEvents(const vector<Event>& events);
+    vector<Event> getAllEvents() const;
 
     // Validation
     bool eventExists(const string& date, const string& name);
