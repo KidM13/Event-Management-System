@@ -29,6 +29,8 @@ struct BSTNode {
 class BST {
 private:
     BSTNode* root;
+    //inorder traversal for the .txt files
+    void inorderTraversal(BSTNode* node, vector<Event>& events) const;
 
     BSTNode* insert(BSTNode* node, Event e);
     BSTNode* search(BSTNode* node,
@@ -50,6 +52,7 @@ public:
     BST();
 
     // Core operations
+    void getAllEvents(vector<Event>& events) const;
     void insertEvent(Event e);
     void deleteEvent(const string& date,
                      const string& name);

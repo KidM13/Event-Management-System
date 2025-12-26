@@ -13,6 +13,26 @@ BST::BST() : root(nullptr) {}
 
 // Insert helper
 //
+
+
+//load event
+void BST::inorderTraversal(
+    BSTNode* node,
+    vector<Event>& events
+) const {
+    if (!node) return;
+
+    inorderTraversal(node->left, events);
+    events.push_back(node->data);
+    inorderTraversal(node->right, events);
+}
+
+void BST::getAllEvents(vector<Event>& events) const {
+    inorderTraversal(root, events);
+}
+
+
+
 BSTNode* BST::insert(BSTNode* node, Event e) {
     if (node == nullptr)
         return new BSTNode(e);
