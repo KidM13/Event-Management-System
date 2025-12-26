@@ -50,7 +50,9 @@ g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
 ## Linux (GCC)
 
 - install GCC
+  
 sudo apt update
+
 sudo apt install g++
 
 Verify installation:
