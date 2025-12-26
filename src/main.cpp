@@ -4,6 +4,7 @@
 #include "modules/participant_manager.h"
 #include "modules/schedule_manager.h"
 #include "modules/file_manager.h"
+#include <limits>
 
 using namespace std;
 
@@ -78,6 +79,7 @@ int main() {
 
         case 2: {
             string name, date;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Event Name: ";
             getline(cin, name);
