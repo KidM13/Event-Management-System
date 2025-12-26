@@ -56,7 +56,7 @@ sudo apt update
 sudo apt install g++
 
 Verify installation:
-```bash
+bash
 g++ --version
 
 - compile the from the project root directory means
