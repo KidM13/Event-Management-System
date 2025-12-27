@@ -1,39 +1,76 @@
 # Event-Management-System
 
-This is a C++ command line based event management system developed as a
-Data Structures and Algorithms semester project.
+## Overview
+This project is a **console-based Event Management System** implemented in **C++** using fundamental **data structures**.
 
-The system allows users to manage events such as adding new events,
-searching events by ID, and viewing stored event information.
-The main focus of the project is to apply data structures in a practical way.
+The system allows users to:
+- Create, update, delete, and search events
+- Register participants
+- Schedule participants to events with waitlisting
+- Undo scheduling actions
+- Persist data using text files
 
-## How the system works
+The project demonstrates the practical use of:
+- Binary Search Tree (BST)
+- Hash Table
+- Queue
+- Stack
+- Modular system design
 
-- Events are stored in memory using a Binary Search Tree (BST)
-- Each event has an ID, name, date, and capacity
-- The event ID is used as the key for searching
-- Data is loaded from a txt file when the program starts
-- Data is saved back to the txt file when the program exits
+---
 
-No database is used. File handling is done using simple .txt files.
 
-## Main functionalities
+## Build and Run Instructions
 
-- Add a new event
-- Search an event by ID
-- Display stored events
-- Save and load event data from file
+### Prerequisites
+- C++ compiler with **C++17** support
+- Git
 
-## How to run
+---
 
-The project is written in C++ and can be compiled using any standard compiler.
+## Windows (MinGW / MSYS2 / Git Bash)
 
-Example using g++:
+### 1. Install Compiler
+Install **MinGW-w64** and ensure `g++` is added to your system `PATH`.
 
-g++ src/*.cpp -I include -o event_system
+Verify installation:
+bash
+g++ --version
 
-  to run it 
-./event_system
+- compile the from the project root directory means
+
+cd Event_management_system
+
+g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
+
+- then run the program
+
+./event_manager
+
+## Linux (GCC)
+
+- install GCC
+  
+sudo apt update
+
+sudo apt install g++
+
+Verify installation:
+bash
+g++ --version
+
+- compile the from the project root directory means
+
+cd Event_management_system
+
+g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
+
+- then run the program
+
+./event_manager
+
+
+
 
 ## Notes
 
