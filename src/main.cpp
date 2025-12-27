@@ -70,7 +70,8 @@ int main() {
 
             if (eventManager.addEvent(id, name, date, capacity)) {
              cout << "Event added successfully.\n";
-            fileManager.log("Event added: " + name);
+                fileManager.saveEvents(eventManager.getAllEvents());
+                fileManager.log("Event added: " + name);
            } else {
             cout << "Failed to add event (event already exists).\n";
               }
@@ -89,7 +90,8 @@ int main() {
 
             if (eventManager.removeEvent(date,name)) {
              cout << "Event deleted successfully.\n";
-             fileManager.log("Event deleted: " + name);
+              fileManager.saveEvents(eventManager.getAllEvents());
+              fileManager.log("Event deleted: " + name);
             } else {
              cout << "Failed to delete event(event doesn't exist).\n";
               }
@@ -179,7 +181,9 @@ int main() {
                         newCapacity
                 )) {
                     cout << "Event updated successfully.\n";
-                    fileManager.log("Event updated: " + newName);
+                       fileManager.log(
+                   "Event updated | Old: " + oldName + " | New: " + newName
+                         );
                 } else {
                     cout << "Event not found. Update failed.\n";
                 }
@@ -204,7 +208,10 @@ int main() {
                   }
                 else {
                cout << "Participant registered successfully.\n";
-               fileManager.log("Participant registered: " + pname);
+                   fileManager.saveParticipants(
+                   participantManager.getAllParticipants()
+                                        );
+                   fileManager.log("Participant registered: " + pname);
              }
             break;
         }

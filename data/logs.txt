@@ -1,0 +1,12 @@
+Event added: football event
+Event added: basketball event
+Event added: developers meetup
+Participant registered: kidus
+Event added: church event
+Undo last action
+
+=== EVENT REPORT ===
+1 developers meetup 2025-12-31 100
+2 church event 2026-1-1 1000
+====================
+Event deleted: church event

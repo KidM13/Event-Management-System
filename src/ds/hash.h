@@ -2,6 +2,7 @@
 #define HASH_H
 
 #include <string>
+#include <vector>
 #include "../models/participant.h"
 
 
@@ -32,6 +33,8 @@ public:
     void insert(int id, const string& name);
     bool remove(int id);
     Participant* search(int id) const;
+    vector<Participant> toVector() const;
+
 
     void display() const;
 };

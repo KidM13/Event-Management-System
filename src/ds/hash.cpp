@@ -1,5 +1,7 @@
 #include "hash.h"
+#include <vector>
 #include <iostream>
+
 
 using namespace std;
 
@@ -58,6 +60,21 @@ Participant* HashTable::search(int id) const {
     }
     return nullptr;
 }
+//to extract the participants
+vector<Participant> HashTable::toVector() const {
+    vector<Participant> result;
+
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        HashNode* curr = table[i];
+        while (curr) {
+            result.push_back(curr->data);
+            curr = curr->next;
+        }
+    }
+
+    return result;
+}
+
 
 // Display table
 void HashTable::display() const {
