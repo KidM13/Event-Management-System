@@ -21,7 +21,7 @@ public:
 
     bool participantExists(int id);
     Participant* getParticipant(int id);
-
+    vector<Participant> getAllParticipants() const;
     void showAllParticipants();
 };
 

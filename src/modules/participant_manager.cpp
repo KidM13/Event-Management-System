@@ -38,6 +38,11 @@ Participant* ParticipantManager::getParticipant(int id) {
     return participants.search(id);
 }
 
+vector<Participant> ParticipantManager::getAllParticipants() const {
+    return participants.toVector();
+}
+
+
 void ParticipantManager::showAllParticipants() {
     participants.display();
 }
