@@ -40,8 +40,11 @@ g++ --version
 - compile the from the project root directory means
 
 cd Event_management_system
+```
 
 g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
+
+```
 
 - then run the program
 
@@ -63,7 +66,8 @@ g++ --version
 
 cd Event_management_system
 
-```g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
+```
+g++ src/main.cpp src/modules/*.cpp src/ds/*.cpp -o event_manager
 ```
 
 - then run the program
